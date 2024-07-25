@@ -1,1 +1,1 @@
-# LIDARs algorithms test laboratory
+# LIDAR's algorithms test laboratory
