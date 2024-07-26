@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+   <file>resources/font/Hack-Regular.ttf</file>
+</qresource>
+</RCC>
