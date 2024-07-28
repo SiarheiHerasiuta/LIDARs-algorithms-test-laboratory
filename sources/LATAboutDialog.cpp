@@ -7,7 +7,9 @@
 #include "LATGlobalContext.h"
 #include "LATAboutDialog.h"
 
-LATAboutDialog::LATAboutDialog(QWidget* p) : QDialog(p) {
+LATAboutDialog::LATAboutDialog(QWidget* parent = Q_NULLPTR) 
+	: QDialog(parent) 
+{
 
 	setWindowTitle(tr("About LIDAR's algorithms test laboratory"));
 

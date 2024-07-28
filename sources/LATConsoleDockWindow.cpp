@@ -7,7 +7,7 @@
 
 #include "LATConsoleDockWindow.h"
 
-LATConsoleDockWindow::LATConsoleDockWindow(QWidget* parent)
+LATConsoleDockWindow::LATConsoleDockWindow(QWidget* parent = Q_NULLPTR)
 	: QPlainTextEdit(parent)
 {
 	document()->setMaximumBlockCount(100);

@@ -8,7 +8,7 @@ class LATConsoleDockWindow : public QPlainTextEdit
 	Q_OBJECT
 
 public:
-	explicit LATConsoleDockWindow(QWidget* parent = nullptr);
+	explicit LATConsoleDockWindow(QWidget* parent);
 
 public slots:
 	void putStringData(const QString& data);

@@ -15,7 +15,7 @@ public:
 
 	static LATGlobalContext* globalLATContext;
 
-	QSettings* globalSettings;
+	QSettings* globalSettings = Q_NULLPTR;
 	
 	tbb::tick_count globalLATTimeCounter;
 

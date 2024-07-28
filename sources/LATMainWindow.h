@@ -27,25 +27,27 @@ private:
 	void createActions();
 	void createMenus();
 	void createStatusBar();
-	void createToolBars();
-	void createDockWindows();
 
 	void displayConsoleDockWindow();
 
-	QMenu* helpMenu;
+	QMenu* _fileMenu = Q_NULLPTR;
+	QMenu* _debugMenu = Q_NULLPTR;
+	QMenu* _helpMenu = Q_NULLPTR;
 
-	QStatusBar* statusbar;
+	QStatusBar* _statusbar = Q_NULLPTR;
 
-	QAction* aboutAction;
-	QAction* aboutQtAction;
+	QAction* _aboutAction = Q_NULLPTR;
+	QAction* _aboutQtAction = Q_NULLPTR;
+	QAction* _fileOpenAction = Q_NULLPTR;
+	QAction* _exitAction = Q_NULLPTR;
+	QAction* _separatorAction = Q_NULLPTR;
+	QAction* _consoleAction = Q_NULLPTR;
 
-	QAction* consoleAction;
+	LATConsoleDockWindow* _console = Q_NULLPTR;
 
-	LATConsoleDockWindow* console;
+	QDockWidget* _consoleDockWidget = Q_NULLPTR;
 
-	QDockWidget* consoleDockWidget;
-
-	QString consoleMessage;
+	QString _consoleMessage;
 
 	private slots:
 		void onConsoleAction();

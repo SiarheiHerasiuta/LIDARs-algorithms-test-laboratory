@@ -15,13 +15,12 @@
 #include "LATConsoleDockWindow.h"
 #include "LATAboutDialog.h"
 
-LATMainWindow::LATMainWindow(QWidget *p) : QMainWindow(p)
+LATMainWindow::LATMainWindow(QWidget *parent = Q_NULLPTR) 
+ : QMainWindow(parent)
 {
 	createActions();
 	createMenus();
 	createStatusBar();
-	createToolBars();
-	createDockWindows();
 	resize(640, 480);
 }
 
@@ -31,19 +30,43 @@ LATMainWindow::~LATMainWindow()
 
 void LATMainWindow::createActions()
 {
-	aboutAction = new QAction(tr("&About"), this);
-	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
+	_fileOpenAction = new QAction(tr("&Open..."), this);
+	_fileOpenAction->setShortcuts(QKeySequence::Open);
+	connect(_fileOpenAction, SIGNAL(triggered()), this, SLOT(openFile()));
 
-	aboutQtAction = new QAction(tr("About &Qt"), this);
-	connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+	_aboutAction = new QAction(tr("&About"), this);
+	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
 
+	_aboutQtAction = new QAction(tr("About &Qt"), this);
+	connect(_aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+	_consoleAction = new QAction(tr("LIDAR's algorithms test laboratory debug &console"), this);
+	_consoleAction->setCheckable(true);
+	_consoleAction->setStatusTip(tr("Show/Hide the Console docking window"));
+	connect(_consoleAction, SIGNAL(triggered()), this, SLOT(onConsoleAction()));
+
+	_exitAction = new QAction(tr("E&xit"), this);
+	_exitAction->setShortcuts(QKeySequence::Quit);
+	connect(_exitAction, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 }
 
 void LATMainWindow::createMenus()
 {
-	helpMenu = menuBar()->addMenu(tr("&Help"));
-	helpMenu->addAction(aboutAction);
-	helpMenu->addAction(aboutQtAction);
+	_fileMenu = menuBar()->addMenu(tr("&File"));
+	_fileMenu->addAction(_fileOpenAction);
+	_separatorAction = _fileMenu->addSeparator();
+	_fileMenu->addSeparator();
+	_fileMenu->addAction(_exitAction);
+
+	_debugMenu = menuBar()->addMenu(tr("&Debug"));
+	_consoleAction->setChecked(true);
+	_debugMenu->addAction(_consoleAction);
+	
+	displayConsoleDockWindow();
+
+	_helpMenu = menuBar()->addMenu(tr("&Help"));
+	_helpMenu->addAction(_aboutAction);
+	_helpMenu->addAction(_aboutQtAction);
 }
 
 void LATMainWindow::createStatusBar()
@@ -51,35 +74,31 @@ void LATMainWindow::createStatusBar()
 	statusBar()->showMessage(tr("Ready to work"),0);
 }
 
-void LATMainWindow::createToolBars()
-{
-	consoleAction = new QAction(this);
-	consoleAction->setEnabled(false);
-	consoleAction->setObjectName(QStringLiteral("Console"));
-	consoleAction->setIconText(consoleAction->objectName());
-	connect(consoleAction,SIGNAL(triggered()),this,SLOT(onConsoleAction()));
-}
-
 void LATMainWindow::displayConsoleDockWindow()
 {
-	if (!consoleAction->isEnabled())
+	if (_consoleAction->isChecked())
 	{
-		consoleDockWidget->show();
-		consoleDockWidget->raise();
+		if (_consoleDockWidget == Q_NULLPTR)
+		{
+			_consoleDockWidget = new QDockWidget(tr("LIDAR's algorithms test laboratory application console"), this);
+			_consoleDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
+			_console = new LATConsoleDockWindow(_consoleDockWidget);
+			_consoleDockWidget->setWidget(_console);
+			addDockWidget(Qt::LeftDockWidgetArea, _consoleDockWidget);
+			connect(_consoleDockWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(onConsoleAction(bool)));
+		}
+		if (_consoleDockWidget != Q_NULLPTR)
+		{
+			_consoleDockWidget->show();
+			_consoleDockWidget->raise();
+		}
 	}
-}
-
-void LATMainWindow::createDockWindows()
-{
-	if (!consoleAction->isEnabled())
+	else
 	{
-		consoleDockWidget = new QDockWidget(tr("LIDAR's algorithms test laboratory application console"), this);
-		consoleDockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
-		console = new LATConsoleDockWindow(consoleDockWidget);
-		consoleDockWidget->setWidget(console);
-		addDockWidget(Qt::LeftDockWidgetArea, consoleDockWidget);
-		connect(consoleDockWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(onConsoleAction(bool)));
-		consoleDockWidget->show();
+		if (_consoleDockWidget != Q_NULLPTR)
+		{
+			_consoleDockWidget->hide();
+		}
 	}
 }
 
@@ -90,14 +109,14 @@ void LATMainWindow::showStatusBarMessage( const QString &message )
 
 void LATMainWindow::showApplicationConsoleMessage( const QString &message )
 {
-	if (console != Q_NULLPTR)
+	if (_console != Q_NULLPTR)
 	{
-		if (consoleMessage.compare(message) != 0)
+		if (_consoleMessage.compare(message) != 0)
 		{
-			console->putStringData(message);
+			_console->putStringData(message);
 		}
-		consoleMessage.clear();
-		consoleMessage.append(message);
+		_consoleMessage.clear();
+		_consoleMessage.append(message);
 	}
 }
 
@@ -112,13 +131,13 @@ void LATMainWindow::showApplicationConsoleAndStatusBarMessage(const QString &mes
 
 void LATMainWindow::onConsoleAction()
 {
-	consoleAction->setEnabled(!consoleAction->isEnabled());
+	_consoleAction->setChecked(_consoleAction->isChecked());
 	displayConsoleDockWindow();
 }
 
-void LATMainWindow::onConsoleAction(bool visible)
+void LATMainWindow::onConsoleAction(bool checked)
 {
-	consoleAction->setEnabled(!visible);
+	_consoleAction->setChecked(checked);
 }
 
 void LATMainWindow::showAboutDialog()
