@@ -7,7 +7,7 @@
 #include "LATGlobalContext.h"
 #include "LATAboutDialog.h"
 
-LATAboutDialog::LATAboutDialog(QWidget* parent = Q_NULLPTR) 
+LATAboutDialog::LATAboutDialog(QWidget* parent) 
 	: QDialog(parent) 
 {
 

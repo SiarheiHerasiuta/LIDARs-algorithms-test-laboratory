@@ -15,13 +15,18 @@
 #include "LATConsoleDockWindow.h"
 #include "LATAboutDialog.h"
 
-LATMainWindow::LATMainWindow(QWidget *parent = Q_NULLPTR) 
+LATMainWindow::LATMainWindow(QWidget *parent) 
  : QMainWindow(parent)
 {
+	qRegisterMetaType<tick_count>("tick_count");
+
+	connect(this, SIGNAL(onConsoleMessage(const QString&, const tick_count&)), this, SLOT(showApplicationConsoleAndStatusBarMessage(const QString&, const tick_count&)));
+	
 	createActions();
 	createMenus();
 	createStatusBar();
 	resize(640, 480);
+	globalLAT.latWindow = this;
 }
 
 LATMainWindow::~LATMainWindow()

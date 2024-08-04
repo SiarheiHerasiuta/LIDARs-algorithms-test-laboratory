@@ -12,8 +12,11 @@ class LATMainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	LATMainWindow(QWidget *parent);
+	LATMainWindow(QWidget *parent = Q_NULLPTR);
 	~LATMainWindow();
+
+Q_SIGNALS:
+	void onConsoleMessage(const QString& message, const tick_count& counter);
 
 	public slots:
 		void showAboutDialog();

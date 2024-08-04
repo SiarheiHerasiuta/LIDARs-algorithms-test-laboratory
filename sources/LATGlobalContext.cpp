@@ -36,3 +36,11 @@ QString LATGlobalContext::versionProductNameText() const
 {
 	return QString(VER_PRODUCTNAME_STR);
 }
+
+void LATGlobalContext::displayLogInformation(const QString& message)
+{
+	if (latWindow != Q_NULLPTR)
+	{
+		emit latWindow->onConsoleMessage(message, tick_count::now());
+	}
+}
