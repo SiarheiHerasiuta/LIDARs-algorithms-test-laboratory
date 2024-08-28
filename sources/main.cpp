@@ -11,7 +11,7 @@
 #include "LATGlobalContext.h"
 #include "LATMainWindow.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	setlocale(LC_CTYPE, "Russian");
 	QT_REQUIRE_VERSION(argc, argv, "5.15.14");
@@ -23,16 +23,15 @@ int main(int argc, char **argv)
 	{
 		if (LATGlobalContext::globalLATContext != Q_NULLPTR)
 		{
-			
-			#if  defined(Q_OS_WIN)
+			LATGlobalContext::globalLATContext->initThreadsContext();
+#if  defined(Q_OS_WIN)
 			if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows10)
 			{
 				QApplication::setStyle(QStyleFactory::create("Fusion"));
 			}
 			QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-			QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-			#endif
-			
+#endif
+
 			QApplication a(argc, argv);
 			LATMainWindow mw(Q_NULLPTR);
 			applicationFilePath = QApplication::applicationFilePath();
@@ -41,6 +40,7 @@ int main(int argc, char **argv)
 		}
 		if (LATGlobalContext::globalLATContext != Q_NULLPTR)
 		{
+			LATGlobalContext::globalLATContext->releaseThreadsContext();
 			delete LATGlobalContext::globalLATContext;
 			LATGlobalContext::globalLATContext = Q_NULLPTR;
 		}

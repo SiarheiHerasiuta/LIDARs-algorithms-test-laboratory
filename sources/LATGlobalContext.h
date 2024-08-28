@@ -6,9 +6,11 @@
 #include "tick_count.h"
 
 #include "LATMainWindow.h"
+#include "LATCloudDataSource.h"
+#include "LATControlThread.h"
 
-struct LATGlobalContext Q_DECL_FINAL : public QObject {
-	
+struct LATGlobalContext final : public QObject {
+
 	Q_OBJECT
 
 public:
@@ -20,8 +22,14 @@ public:
 	LATMainWindow* latWindow = Q_NULLPTR;
 
 	QSettings* globalSettings = Q_NULLPTR;
-	
+
+	LATControlThread* controlThread = Q_NULLPTR;
+	LATCloudDataSource* cloudDataSource = Q_NULLPTR;
+
 	tbb::tick_count globalLATTimeCounter;
+
+	void initThreadsContext();
+	void releaseThreadsContext();
 
 	QString licenseText() const;
 	QString releaseDateText() const;
@@ -30,6 +38,7 @@ public:
 	void displayLogInformation(const QString& message);
 
 	Q_DISABLE_COPY(LATGlobalContext)
+	Q_DISABLE_MOVE(LATGlobalContext)
 };
 
 #define globalLAT (*LATGlobalContext::globalLATContext)

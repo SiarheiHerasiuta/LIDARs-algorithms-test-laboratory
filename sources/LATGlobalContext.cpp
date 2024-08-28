@@ -1,25 +1,17 @@
-#include <QFutureWatcher>
-#include <QtConcurrent/QtConcurrent>
-
 #include "LATGlobalContext.h"
 
 #include "Version.h"
 
-LATGlobalContext * LATGlobalContext::globalLATContext = Q_NULLPTR;
+LATGlobalContext* LATGlobalContext::globalLATContext = Q_NULLPTR;
 
-LATGlobalContext::LATGlobalContext() 
+LATGlobalContext::LATGlobalContext()
 {
-	globalSettings = new QSettings("LATLaboratory.ini", QSettings::IniFormat);
 	globalLATTimeCounter = tbb::tick_count::now();
 }
 
 LATGlobalContext::~LATGlobalContext()
 {
-	if (globalSettings != Q_NULLPTR)
-	{
-		delete globalSettings;
-		globalSettings = Q_NULLPTR;
-	}
+
 }
 
 QString LATGlobalContext::licenseText() const
@@ -34,7 +26,7 @@ QString LATGlobalContext::releaseDateText() const
 
 QString LATGlobalContext::versionProductNameText() const
 {
-	return QString(VER_PRODUCTNAME_STR);
+	return QString(LAT_VER_PRODUCTNAME_STR);
 }
 
 void LATGlobalContext::displayLogInformation(const QString& message)
@@ -42,5 +34,41 @@ void LATGlobalContext::displayLogInformation(const QString& message)
 	if (latWindow != Q_NULLPTR)
 	{
 		emit latWindow->onConsoleMessage(message, tick_count::now());
+	}
+}
+
+void LATGlobalContext::initThreadsContext()
+{
+	if (globalSettings == Q_NULLPTR)
+	{
+		globalSettings = new QSettings("LATLaboratory.ini", QSettings::IniFormat);
+	}
+	if (controlThread == Q_NULLPTR)
+	{
+		controlThread = new LATControlThread;
+		controlThread->start();
+	}
+	if (cloudDataSource == Q_NULLPTR)
+	{
+		cloudDataSource = new LATCloudDataSource;
+	}
+}
+
+void LATGlobalContext::releaseThreadsContext()
+{
+	if (globalSettings != Q_NULLPTR)
+	{
+		delete globalSettings;
+		globalSettings = Q_NULLPTR;
+	}
+	if (controlThread != Q_NULLPTR)
+	{
+		delete controlThread;
+		controlThread = Q_NULLPTR;
+	}
+	if (cloudDataSource != Q_NULLPTR)
+	{
+		delete cloudDataSource;
+		cloudDataSource = Q_NULLPTR;
 	}
 }

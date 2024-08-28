@@ -1,25 +1,25 @@
 #define LAT_XTEXT(X) #X
 #define LAT_TEXT(X) LAT_XTEXT(X)
 
-#define VERSION_MAJOR              1
-#define VERSION_MINOR              0
-#define VERSION_REVISION           0
-#define VERSION_BUILD              0
+#define LAT_VERSION_MAJOR              1
+#define LAT_VERSION_MINOR              0
+#define LAT_VERSION_REVISION           0
+#define LAT_VERSION_BUILD              0
 
-#define VER_FILE_DESCRIPTION_STR   "LIDAR's algorithms test laboratory"
-#define VER_FILE_VERSION           VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, VERSION_BUILD
-#define VER_FILE_VERSION_STR       LAT_TEXT(VERSION_MAJOR)    \
-								"." LAT_TEXT(VERSION_MINOR)    \
-								"." LAT_TEXT(VERSION_REVISION) \
-								"." LAT_TEXT(VERSION_BUILD)    \
+#define LAT_VER_FILE_DESCRIPTION_STR   "LIDAR's algorithms test laboratory"
+#define LAT_VER_FILE_VERSION           LAT_VERSION_MAJOR, LAT_VERSION_MINOR, LAT_VERSION_REVISION, LAT_VERSION_BUILD
+#define LAT_VER_FILE_VERSION_STR       LAT_TEXT(VERSION_MAJOR)    \
+										"." LAT_TEXT(VERSION_MINOR)    \
+										"." LAT_TEXT(VERSION_REVISION) \
+										"." LAT_TEXT(VERSION_BUILD)    \
 
-#define VER_COMPANY_NAME_STR	    "www.robotics.by and/or its subsidiary(-ies)"
-#define VER_PRODUCTNAME_STR         "LIDAR's algorithms test laboratory"
-#define VER_PRODUCT_VERSION         VER_FILE_VERSION
-#define VER_PRODUCT_VERSION_STR     VER_FILE_VERSION_STR
-#define VER_ORIGINAL_FILENAME_STR   VER_PRODUCTNAME_STR ".exe"
-#define VER_INTERNAL_NAME_STR       "LIDAR's algorithms test laboratory"
-#define VER_COPYRIGHT_STR           "Copyright (C) 2024 Siarhei Herasiuta <contacts@robotics.by> and/or its subsidiary(-ies)."
+#define LAT_VER_COMPANY_NAME_STR	    "www.robotics.by and/or its subsidiary(-ies)"
+#define LAT_VER_PRODUCTNAME_STR         "LIDAR's algorithms test laboratory"
+#define LAT_VER_PRODUCT_VERSION         LAT_VER_FILE_VERSION
+#define LAT_VER_PRODUCT_VERSION_STR     LAT_VER_FILE_VERSION_STR
+#define LAT_VER_ORIGINAL_FILENAME_STR   LAT_VER_PRODUCTNAME_STR ".exe"
+#define LAT_VER_INTERNAL_NAME_STR       "LIDAR's algorithms test laboratory"
+#define LAT_VER_COPYRIGHT_STR           "Copyright (C) 2024 Siarhei Herasiuta <contacts@robotics.by> and/or its subsidiary(-ies)."
 
 #define LAT_RELEASE "Compiled " __DATE__ " " __TIME__
 

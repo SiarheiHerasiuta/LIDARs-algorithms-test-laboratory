@@ -4,8 +4,8 @@
 IDI_ICON1               ICON    DISCARDABLE     "icon.ico"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION VER_FILE_VERSION
- PRODUCTVERSION VER_PRODUCT_VERSION
+ FILEVERSION LAT_VER_FILE_VERSION
+ PRODUCTVERSION LAT_VER_PRODUCT_VERSION
  FILEFLAGS 0x0L
  FILEFLAGSMASK 0x3fL
  FILEOS 0x00040004L
@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "CompanyName", VER_COMPANY_NAME_STR "\0"
-            VALUE "FileDescription", VER_FILE_DESCRIPTION_STR "\0"
-            VALUE "FileVersion", VER_FILE_VERSION_STR "\0"
-            VALUE "LegalCopyright", VER_COPYRIGHT_STR "\0"
-            VALUE "InternalName", VER_INTERNAL_NAME_STR "\0"
-            VALUE "OriginalFilename", VER_ORIGINAL_FILENAME_STR "\0"
-            VALUE "ProductName", VER_PRODUCTNAME_STR "\0"
-            VALUE "ProductVersion", VER_PRODUCT_VERSION_STR "\0"
+            VALUE "CompanyName", LAT_VER_COMPANY_NAME_STR "\0"
+            VALUE "FileDescription", LAT_VER_FILE_DESCRIPTION_STR "\0"
+            VALUE "FileVersion", LAT_VER_FILE_VERSION_STR "\0"
+            VALUE "LegalCopyright", LAT_VER_COPYRIGHT_STR "\0"
+            VALUE "InternalName", LAT_VER_INTERNAL_NAME_STR "\0"
+            VALUE "OriginalFilename", LAT_VER_ORIGINAL_FILENAME_STR "\0"
+            VALUE "ProductName", LAT_VER_PRODUCTNAME_STR "\0"
+            VALUE "ProductVersion", LAT_VER_PRODUCT_VERSION_STR "\0"
         END
     END
     BLOCK "VarFileInfo"

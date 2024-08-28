@@ -3,7 +3,7 @@
 #include <QPlainTextEdit>
 #include <QFile>
 
-class LATConsoleDockWindow : public QPlainTextEdit
+class LATConsoleDockWindow final : public QPlainTextEdit
 {
 	Q_OBJECT
 
@@ -23,5 +23,9 @@ protected:
 	virtual void contextMenuEvent(QContextMenuEvent* event = Q_NULLPTR);
 
 private:
+	Q_DISABLE_COPY(LATConsoleDockWindow)
+	Q_DISABLE_MOVE(LATConsoleDockWindow)
+	
 	QFile _logFile;
+
 };
